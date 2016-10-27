@@ -15,9 +15,9 @@ void main()
 	sfd=socket(AF_INET,SOCK_DGRAM,IPPROTO_UDP);
 	printf("Enter some data to send to server\n");
 	fgets(buf,sizeof(buf),stdin);
-	sendto(sfd,buf,sizeof(buf),0,(struct addr *)&sa,sizeof(sa));
+	sendto(sfd,buf,sizeof(buf),0,(struct sockaddr *)&sa,sizeof(sa));
 	len=sizeof(sa);
-	recvfrom(sfd,buf1,sizeof(buf1),0,(struct addr *)&sa,&len);
+	recvfrom(sfd,buf1,sizeof(buf1),0,(struct sockaddr *)&sa,&len);
 	puts(buf1);
 	close(sfd);
 }
