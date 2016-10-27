@@ -1,51 +1,34 @@
 #include<stdio.h>
-#include<sys/socket.h>
-#include<sys/types.h>
-#include<netinet/in.h>
 #include<stdlib.h>
-void str_echo(int s)
+#include<unistd.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<arpa/inet.h>
+void main()
 {
-char buf[50];
-//receiving data from client
-recv(s,buf,50,0);
-puts("Message from Client...");
-fputs(buf,stdout);
-send(s,buf,50,0);
-}
-int main()
-{
-int ls,cs,len;
-struct sockaddr_in serv,cli;
-pid_t pid;
-puts("I am Server...");
-//creating socket
-ls=socket(AF_INET,SOCK_STREAM,0);
-puts("Socket Created Successfully...");
-//socket address structure
-serv.sin_family=AF_INET;
-serv.sin_addr.s_addr=INADDR_ANY;
-serv.sin_port=htons(5000);
-bind(ls,(struct sockaddr*)&serv,sizeof(serv));
-puts("Binding Done...");
-listen(ls,3);
-puts("Listening for Client...");
-for(; ;)
-{
-len=sizeof(cli);
-//accepting client connection
-cs=accept(ls,(struct sockaddr*)&cli,&len);
-puts("\nConnected to Client...");
-//creating child process
-if((pid=fork()) == 0)
-{
-puts("Child process created...");
-close(ls);
-str_echo(cs);
-close(cs);
-exit(0);
-}
-
-close(cs);
-}
-return 0;
+	int sfd,len,afd,pid;
+	char buf[50],buf1[50];
+	struct sockaddr_in sa,ca;
+	sa.sin_family=AF_INET;
+	sa.sin_addr.s_addr=inet_addr("127.0.0.1");
+	sa.sin_port=htons(18000);
+	sfd=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+	bind(sfd,(struct sockaddr *)&sa,sizeof(sa));
+	listen(sfd,4);
+	while(1)
+	{
+		len=sizeof(ca);
+		afd=accept(sfd,(struct sockaddr *)&ca,&len);
+		printf("Connected to client with id %d\n",afd);
+		if((pid=fork())==0)
+		{
+			recv(afd,buf,50,0);
+			fputs(buf,stdout);
+			printf("Enter reply to client\n");
+			fgets(buf1,50,stdin);
+			send(afd,buf1,sizeof(buf1),0);
+			close(afd);
+		}
+	}
+	close(sfd);
 }
