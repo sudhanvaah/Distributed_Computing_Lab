@@ -6,20 +6,20 @@
 
 int main()
 {
-    int shmid,c;
+    int shmid;
     int ch=1;
     key_t key = 02577;
-    int *addr;
+    int *addr,*c;
     shmid = shmget(key, 4096, IPC_CREAT|0666);
     printf("Accessing shared memory at %d\n",shmid);
     addr = (int *)shmat(shmid, NULL, 0);
     printf("got %d\n", *addr);
-    c=*addr;
+    c=addr;
     do
     {
         printf("Enter 1 if you want to increment ");
         scanf("%d",&ch);
-        *addr=++c;
+        (*c)++;
         printf("Counter incremented to %d\n", c);
     }
     while(ch==1);
