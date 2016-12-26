@@ -95,7 +95,7 @@ void ring(int processno)
 			cout<<"\nMessage sent from "<<uncrashed[currprocessno]<< "to "<<uncrashed[(currprocessno+1)%count];
 			currprocessno=(currprocessno+1)%count;
 		}while(uncrashed[currprocessno]!=processno);
-		cordinator=*(max_element(uncrashed,uncrashed+count));
+		cordinator=uncrashed[count-1];
 		cout<<"\n New cordinator is : "<<cordinator<<endl;
 	}
 
