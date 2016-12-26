@@ -15,7 +15,6 @@ int main(int argc, char **argv)
 
  int res = 0;
 
-
  optlen = sizeof(int);
  res = getsockopt(sockfd,IPPROTO_TCP,TCP_NODELAY,(char *)&flag,&optlen);
 
