@@ -30,7 +30,7 @@ int main()
 				int newinitiator=0;
 				for(newinitiator=0;newinitiator<totalprocess;newinitiator++)
 				{
-					if(newinitiator!=initiator and processes[newinitiator].crashed==false)
+					if(processes[newinitiator].crashed==false)
 					{
 						initiator=newinitiator;
 						break;
@@ -74,13 +74,7 @@ void ring(int processno)
 			uncrashed[count++]=i;
 		}
 	}
-	
-	if(count==1 and uncrashed[0]==processno)
-	{
-		cout<<"only process "<<processes[processno].processID<<" is left so coordinator is "<<processes[processno].processID<<endl;
-		cordinator=processno;
-	}
-	else if(count==1)
+	if(count==1)
 	{
 		cout<<"only process active is "<<uncrashed[0]<<" so coodinator is "<<uncrashed[0]<<endl;
 		cordinator=uncrashed[0];
