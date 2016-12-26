@@ -20,7 +20,7 @@ int main()
         printf("Enter 1 if you want to increment ");
         scanf("%d",&ch);
         (*c)++;
-        printf("Counter incremented to %d\n", c);
+        printf("Counter incremented to %d\n", *c);
     }
     while(ch==1);
     return 0;
