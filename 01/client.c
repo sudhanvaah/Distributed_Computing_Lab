@@ -14,7 +14,7 @@ void main()
 	sa.sin_addr.s_addr=inet_addr("127.0.0.1");
 	sfd=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
 	connect(sfd,(struct sockaddr *)&sa,sizeof(sa));
-	puts("Enter data to send to client");
+	puts("Enter data to send to server");
 	fgets(buf,50,stdin);
 	send(sfd,buf,sizeof(buf),0);
 	recv(sfd,buf1,sizeof(buf1),0);
